@@ -1,0 +1,29 @@
+{
+    "name": "weblablv/aws-sdk-wrapper-ses",
+    "description": "",
+    "type": "library",
+    "license": "",
+    "autoload": {
+        "psr-4": {
+            "Weblab\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Edvards Umbrass",
+            "email": "edvards.umbrass@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "pear",
+            "url": "https://pear.php.net"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "aws/aws-sdk-php": "2.*",
+        "pear/Mail_Mime": "^1.10.1"
+    }
+}
