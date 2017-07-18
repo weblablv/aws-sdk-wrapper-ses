@@ -63,7 +63,12 @@ final class SesClientEmailSender
 			'from' => (string)$data->getSender(),
 			'to' => implode(', ', array_map(function(Email $recipient) { return (string)$recipient; }, $data->getRecipients())),
 			'subject' => $data->getSubject()
-		]) . "\r\n" . $mail->get();
+		]) . "\r\n" . $mail->get([
+			'text_encoding' => '7bit',
+			'text_charset'  => 'utf-8',
+			'html_charset'  => 'utf-8',
+			'head_charset'  => 'utf-8'
+		]);
 
 		// send email
 		return $this->amazonSesClient->sendRawEmail([
