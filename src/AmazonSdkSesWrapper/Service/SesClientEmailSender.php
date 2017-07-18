@@ -1,12 +1,12 @@
 <?php
 
-namespace Weblab\AmazonSdkSesWrapper\Service;
+namespace WebLabLv\AmazonSdkSesWrapper\Service;
 
 use Aws\Ses\SesClient;
 use Mail_mime;
 
-use Weblab\AmazonSdkSesWrapper\DataTransfer\SesEmailDataTransfer;
-use Weblab\AmazonSdkSesWrapper\ValueObject\Email;
+use WebLabLv\AmazonSdkSesWrapper\DataTransfer\SesEmailDataTransfer;
+use WebLabLv\AmazonSdkSesWrapper\ValueObject\Email;
 
 final class SesClientEmailSender
 {

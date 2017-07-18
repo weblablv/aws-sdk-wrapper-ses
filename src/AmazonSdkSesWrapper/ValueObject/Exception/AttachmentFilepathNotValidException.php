@@ -1,6 +1,6 @@
 <?php
 
-namespace Weblab\AmazonSdkSesWrapper\ValueObject\Exception;
+namespace WebLabLv\AmazonSdkSesWrapper\ValueObject\Exception;
 
 use InvalidArgumentException;
 

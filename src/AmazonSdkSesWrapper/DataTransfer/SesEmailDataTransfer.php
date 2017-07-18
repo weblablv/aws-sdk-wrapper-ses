@@ -1,9 +1,9 @@
 <?php
 
-namespace Weblab\AmazonSdkSesWrapper\DataTransfer;
+namespace WebLabLv\AmazonSdkSesWrapper\DataTransfer;
 
-use Weblab\AmazonSdkSesWrapper\ValueObject\Attachment;
-use Weblab\AmazonSdkSesWrapper\ValueObject\Email;
+use WebLabLv\AmazonSdkSesWrapper\ValueObject\Attachment;
+use WebLabLv\AmazonSdkSesWrapper\ValueObject\Email;
 
 final class SesEmailDataTransfer
 {

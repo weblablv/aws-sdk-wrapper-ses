@@ -5,7 +5,7 @@
     "license": "",
     "autoload": {
         "psr-4": {
-            "Weblab\\": "src/"
+            "WebLabLv\\": "src/"
         }
     },
     "authors": [

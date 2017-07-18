@@ -1,6 +1,6 @@
 <?php
 
-namespace Weblab\AmazonSdkSesWrapper\Support;
+namespace WebLabLv\AmazonSdkSesWrapper\Support;
 
 final class FileSystemSupport
 {

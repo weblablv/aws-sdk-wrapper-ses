@@ -1,9 +1,9 @@
 <?php
 
-namespace Weblab\AmazonSdkSesWrapper\ValueObject;
+namespace WebLabLv\AmazonSdkSesWrapper\ValueObject;
 
-use Weblab\AmazonSdkSesWrapper\Support\FileSystemSupport;
-use Weblab\AmazonSdkSesWrapper\ValueObject\Exception\AttachmentFilepathNotValidException;
+use WebLabLv\AmazonSdkSesWrapper\Support\FileSystemSupport;
+use WebLabLv\AmazonSdkSesWrapper\ValueObject\Exception\AttachmentFilepathNotValidException;
 
 use Guzzle\Http\Mimetypes;
 

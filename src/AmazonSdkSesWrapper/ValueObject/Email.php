@@ -1,8 +1,8 @@
 <?php
 
-namespace Weblab\AmazonSdkSesWrapper\ValueObject;
+namespace WebLabLv\AmazonSdkSesWrapper\ValueObject;
 
-use Weblab\AmazonSdkSesWrapper\ValueObject\Exception\EmailNotValidException;
+use WebLabLv\AmazonSdkSesWrapper\ValueObject\Exception\EmailNotValidException;
 
 final class Email
 {
