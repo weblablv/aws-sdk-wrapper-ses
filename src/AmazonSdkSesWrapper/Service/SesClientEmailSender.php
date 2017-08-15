@@ -14,67 +14,68 @@ final class SesClientEmailSender
 	 * @var SesClient $amazonSesClient
 	 */
 	private $amazonSesClient;
-	
+
 	/**
 	 * @param string $profile
 	 * @param string $accessKeyId
 	 * @param string $accessSecretKey
 	 * @param string $region
-	 * @param array $config
+	 * @param array  $config
 	 */
 	public function __construct(string $profile, string $accessKeyId, string $accessSecretKey, string $region, array $config = [])
 	{
-		$config = array_merge($config, [
-			'profile' => $profile,
+		$config = array_merge([
+			'profile'     => $profile,
+            'region'      => $region,
 			'credentials' => [
-				'key' => $accessKeyId,
+				'key'    => $accessKeyId,
 				'secret' => $accessSecretKey
-			],
-			'region' => $region
-		]);
-		
+			]
+		], $config);
+
 		$this->amazonSesClient = SesClient::factory($config);
 	}
-	
+
 	/**
 	 * @param SesEmailDataTransfer $data
 	 * @return \Guzzle\Service\Resource\Model
 	 */
 	public function send(SesEmailDataTransfer $data)
 	{
-		$mail = new Mail_mime([ 'eol' => "\n" ]);
+        $mailMime = new Mail_mime([
+            'text_encoding' => '7bit',
+            'text_charset'  => 'utf-8',
+            'html_charset'  => 'utf-8',
+            'head_charset'  => 'utf-8',
+            'eol'           => "\n"
+        ]);
 
-		// set email text part
-		// todo:: if empty should be used html text?
-		if (false === empty($data->getText())) {
-			$mail->setTXTBody($data->getText());
-		}
-		// set email html text part
-		if (false === empty($data->getHtmlText())) {
-			$mail->setHTMLBody($data->getHtmlText());
-		}
-		// add attachments
-		foreach($data->getAttachments() as $attachment) {
-			$mail->addAttachment($attachment->getFilepath(), $attachment->getCtype(), $attachment->getTitle());
-		}
-		
-		// prepare message and send email using ses client
-		$message = $mail->txtHeaders([
-			'from' => (string)$data->getSender(),
-			'to' => implode(', ', array_map(function(Email $recipient) { return (string)$recipient; }, $data->getRecipients())),
-			'subject' => $data->getSubject()
-		]) . "\r\n" . $mail->get([
-			'text_encoding' => '7bit',
-			'text_charset'  => 'utf-8',
-			'html_charset'  => 'utf-8',
-			'head_charset'  => 'utf-8'
-		]);
+        false === empty($data->getText())     && $mailMime->setTXTBody($data->getText());
+        false === empty($data->getHtmlText()) && $mailMime->setHTMLBody($data->getHtmlText());
 
-		// send email
-		return $this->amazonSesClient->sendRawEmail([
-			'RawMessage' => [
-				'Data' => base64_encode($message)
-			]
-		]);
+        foreach($data->getAttachments() as $attachment) {
+            $mailMime->addAttachment(
+                $attachment->getFilepath(), $attachment->getCtype(), $attachment->getTitle()
+            );
+        }
+
+        $headers = [
+            'from'    => (string) $data->getSender(),
+            'subject' => (string) $data->getSubject(),
+            'to'      => (string) implode(',', array_map(function(Email $recipient) {
+                return (string)$recipient;
+            }, $data->getRecipients()))
+        ];
+
+        // prepare headers
+        foreach($headers as $name => $value) {
+            $headers[$name] = $mailMime->encodeHeader($name, $value, 'utf-8', 'quoted-printable');
+        }
+
+        return $this->amazonSesClient->sendRawEmail([
+            'RawMessage' => [
+                'Data' => base64_encode($mailMime->txtHeaders($headers) . "\r\n" . $mailMime->get())
+            ]
+        ]);
 	}
 }
