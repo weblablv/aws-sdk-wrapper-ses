@@ -23,7 +23,7 @@
     ],
     "require": {
         "php": "^7.0",
-        "aws/aws-sdk-php": "2.*",
+        "aws/aws-sdk-php": "^3.36",
         "pear/Mail_Mime": "^1.10.1"
     }
 }
