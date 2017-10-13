@@ -13,7 +13,8 @@ use Mail_mime;
 /**
  * Credentials: http://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/credentials.html#using-the-aws-credentials-file-and-credential-profiles
  */
-final class SesClientSender
+
+class SesClientSender
 {
     /**
      * @var SesClient $sesClient
