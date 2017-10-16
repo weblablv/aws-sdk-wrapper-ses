@@ -1,7 +1,7 @@
 # Usage
 
 ### Ses client data
-Ses client data is a email message. With ability to set sender, html text, attachments, etc...
+Ses client data is a email message. With ability to set sender, html text, attachments, etc...   
 Sender and recipient(s) are required, all another arguments can be omitted
 ```php
 // equals to $sesClientData = new SesClientData($sender)
@@ -19,7 +19,7 @@ false === empty($subject)  && $sesClientData->setSubject($subject) // is optiona
  */ 
 $sesClientData->addRecipient('email@domain', 'fullname');
 $sesClientData->addRecipient('email@domain.com');
-$sesClientData->addRecipient('email@domain.com); // will be omitted, because "email@domain.com" was already added previously
+$sesClientData->addRecipient('email@domain.com'); // will be omitted, because "email@domain.com" was already added previously
 
 /**
  * attachments is optional and can be omitted
