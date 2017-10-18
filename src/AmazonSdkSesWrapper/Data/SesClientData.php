@@ -30,6 +30,10 @@ final class SesClientData
      * @var array|Attachment[]
      */
     private $attachments = [];
+    /**
+     * @var array $customHeaders
+     */
+    private $customHeaders = [];
 
     /**
      * @param string $sender
@@ -173,6 +177,36 @@ final class SesClientData
     public function addAttachment(Attachment $attachment): SesClientData
     {
         array_push($this->attachments, $attachment);
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCustomHeaders(): array
+    {
+        return $this->customHeaders;
+    }
+
+    /**
+     * @param $name
+     * @param string $value
+     *
+     * @return SesClientData
+     */
+    public function addCustomHeader(string $name, string $value): SesClientData
+    {
+        $this->customHeaders[$name] = $value;
+        return $this;
+    }
+
+    /**
+     * @param array $headers
+     * @return SesClientData
+     */
+    public function setCustomHeaders(array $headers): SesClientData
+    {
+        $this->customHeaders = $headers; // todo:: array_merge instead of replace?
         return $this;
     }
 }

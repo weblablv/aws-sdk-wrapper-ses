@@ -186,19 +186,21 @@ class SesClientSender
             );
         }
 
-        $headers = [
-            'from'    => $sesClientData->getSender(),
-            'to'      => $sesClientData->getRecipientString(),
-            'subject' => $sesClientData->getSubject()
-        ];
-        foreach($headers as $name => $value) {
-            $headers[$name] = $mailMime->encodeHeader($name, $value, 'utf-8', 'quoted-printable');
+        $mailHeaders       = [];
+        $mailHeaders['To'] = $sesClientData->getRecipientString(); // todo:: move to sendRawEmail method
+
+        false === empty($sesClientData->getSubject())       && $mailHeaders['Subject'] = $sesClientData->getSubject();
+        false === empty($sesClientData->getCustomHeaders()) && $mailHeaders = array_merge($mailHeaders, $sesClientData->getCustomHeaders());
+
+        foreach($mailHeaders as $name => $value) {
+            $mailHeaders[$name] = $mailMime->encodeHeader($name, $value, 'utf-8', 'quoted-printable');
         }
 
         true === $this->initSesClientRequired() && $this->initSesClient();
         $this->result = $this->sesClient->sendRawEmail([
+            'Source'     => $sesClientData->getSender(),
             'RawMessage' => [
-                'Data' => $mailMime->txtHeaders($headers) . "\r\n" . $mailMime->get()
+                'Data' => $mailMime->txtHeaders($mailHeaders) . "\r\n" . $mailMime->get()
             ]
         ]);
     }
