@@ -11,6 +11,7 @@ false === empty($htmlText) && $sesClientData->setHtmlText($htmlText); // is opti
 false === empty($text)     && $sesClientData->setText($text); // is optional and can be omitted if email text is not required, setText method will remove all html tags with strip_tags method
 false === empty($subject)  && $sesClientData->setSubject($subject) // is optional and can be omitted if email subject is not required
 
+
 /**
  * at least on recipient is required to send email
  * 
@@ -31,6 +32,14 @@ $sesClientData->addAttachment(
     Attachment::create('full/path/to/attachment.file', 'fileTitle'), // attachment filename will be 'fileTitle'
     Attachment::create('full/path/to/attachment/file.txt')           // attachment filename will be 'file'
 );
+
+/**
+ * custom headers is optional and can be omitted
+ */
+ $sesClientData->addCustomHeader('List-Unsubscribe', 'http://domain.com/member/unsubscribe/?listname=espc-tech@domain.com?id=12345N');
+ $sesClientData->setCustomHeaders([ // set will replace all custom headers ( also previously added with addCustomHeader )
+    'List-Unsubscribe' => 'http://domain.com/member/unsubscribe/?listname=espc-tech@domain.com?id=12345N
+ ])
 ```
 
 ### Ses client sender
