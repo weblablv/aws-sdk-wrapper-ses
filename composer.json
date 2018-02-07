@@ -2,7 +2,7 @@
     "name": "weblablv/aws-sdk-wrapper-ses",
     "description": "",
     "type": "library",
-    "license": "",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "WebLabLv\\": "src/"
