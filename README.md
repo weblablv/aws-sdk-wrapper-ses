@@ -48,15 +48,12 @@ Ses client sender is wrapper for amazon sdk ses client and used to send email ( 
 /**
  * SesClientSender have some predefined configuration values and can be used out-of-box.
  * http://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/credentials.html#using-the-aws-credentials-file-and-credential-profiles
- *
- * equals to $sesClientSender = new SesClientSender()
  */
-$sesClientSender = SesClientSender::create();
+$sesClientSender = new SesClientSender($credentialsKey, $credentialsSecret)
 
-false === empty($profile)         && $sesClientSender->setProfile($profile);                 // is optional if you need to change default ses profile in credentials file ( default )
-false === empty($credentialsPath) && $sesClientSender->setCredentialsPath($credentialsPath); // is optional if you need to change default path to credentials path ( ~/.aws/credentials )
-false === empty($version)         && $sesClientSender->setVersion($version);                 // is optional if you need to change default version ( 2010-12-01 )
-false === empty($region)          && $sesClientSender->setRegion($region);                   // is optional if you need to change default region ( us-east-1 )
+false === empty($profile) && $sesClientSender->setProfile($profile); // is optional if you need to change default ses profile in credentials file ( default )
+false === empty($version) && $sesClientSender->setVersion($version); // is optional if you need to change default version ( 2010-12-01 )
+false === empty($region)  && $sesClientSender->setRegion($region);   // is optional if you need to change default region ( us-east-1 )
 
 /**
  * method will directly send email ( $sesClientData ) with amazon ses client api
