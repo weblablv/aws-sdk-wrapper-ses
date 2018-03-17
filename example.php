@@ -1,16 +1,16 @@
 <?php
 
+require_once 'vendor/autoload.php';
+
 use WebLabLv\AmazonSdkSesWrapper\Data\SesClientData;
 use WebLabLv\AmazonSdkSesWrapper\Service\SesClientSender;
 use WebLabLv\AmazonSdkSesWrapper\ValueObject\Attachment;
 
-require_once 'vendor/autoload.php';
-
 $sender        = null;
 $subject       = 'Ses Client sender example email #Русский текст';
 $recipients    = [
-    'username@domain'     => 'Someone username',
-    'username@domain.com' => null
+    'username@domain.com' => 'Someone username',
+    'username@domain'     => null
 ];
 $htmlText      = '<p>Hello <b>amazon ses client</b> example email!</p>';
 $text          = 'hello amazon ses client example email!';
@@ -38,17 +38,17 @@ foreach($attachments as $attachment) {
 /**
  * Ses Client sender
  */
-$profile         = null;
-$credentialsPath = null;
-$version         = null;
-$region          = null;
+$profile           = null;
+$credentialsKey    = null;
+$credentialsSecret = null;
+$version           = null;
+$region            = null;
 
-$sesClientSender = SesClientSender::create();
+$sesClientSender = new SesClientSender($credentialsKey, $credentialsSecret);
 
-false === empty($credentialsPath) && $sesClientSender->setCredentialsPath($credentialsPath);
-false === empty($profile)         && $sesClientSender->setProfile($profile);
-false === empty($version)         && $sesClientSender->setVersion($version);
-false === empty($region)          && $sesClientSender->setRegion($region);
+false === empty($profile) && $sesClientSender->setProfile($profile);
+false === empty($version) && $sesClientSender->setVersion($version);
+false === empty($region)  && $sesClientSender->setRegion($region);
 
 $sesClientSender->send($sesClientData);
 print_r($sesClientSender->getSesClientResult());

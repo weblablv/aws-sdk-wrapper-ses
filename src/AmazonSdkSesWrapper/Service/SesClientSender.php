@@ -25,9 +25,9 @@ class SesClientSender
      */
     private $profile = 'default';
     /**
-     * @var string $credentialsPath path to profiles credentials file
+     * @var array $credentials
      */
-    private $credentialsPath;
+    private $credentials = [];
     /**
      * @var string $version
      */
@@ -42,20 +42,15 @@ class SesClientSender
     private $result;
 
     /**
-     * @param string|null $credentialsPath
+     * @param string $key
+     * @param string $secret
      */
-    public function __construct(string $credentialsPath = null)
+    public function __construct(string $key, string $secret)
     {
-        false === empty($credentialsPath) && $this->credentialsPath = $credentialsPath;
-    }
-
-    /**
-     * @param string|null $credentialsPath
-     * @return SesClientSender
-     */
-    public static function create(string $credentialsPath = null): SesClientSender
-    {
-        return new self($credentialsPath);
+        $this->credentials = [
+            'key'    => $key,
+            'secret' => $secret
+        ];
     }
 
     /**
@@ -85,16 +80,6 @@ class SesClientSender
     public function setRegion(string $region): SesClientSender
     {
         $this->region = $region;
-        return $this;
-    }
-
-    /**
-     * @param string $credentialsPath
-     * @return SesClientSender
-     */
-    public function setCredentialsPath(string $credentialsPath): SesClientSender
-    {
-        $this->credentialsPath = $credentialsPath;
         return $this;
     }
 
@@ -140,19 +125,8 @@ class SesClientSender
         return [
             'version'     => $this->version,
             'region'      => $this->region,
-            'credentials' => $this->getConfigurationCredentials()
+            'credentials' => $this->credentials
         ];
-    }
-
-    /**
-     * @return callable
-     */
-    private function getConfigurationCredentials(): callable
-    {
-        $provider = CredentialProvider::ini($this->profile, $this->credentialsPath);
-        $provider = CredentialProvider::memoize($provider);
-
-        return $provider;
     }
 
     /**
