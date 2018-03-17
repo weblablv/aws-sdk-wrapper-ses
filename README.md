@@ -45,10 +45,9 @@ $sesClientData->addAttachment(
 ### Ses client sender
 Ses client sender is wrapper for amazon sdk ses client and used to send email ( SesClientData ) using amazon SesClient
 ```php
-/**
- * SesClientSender have some predefined configuration values and can be used out-of-box.
- * http://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/credentials.html#using-the-aws-credentials-file-and-credential-profiles
- */
+$credentialsKey    = null; // required credentials key id string    
+$credentialsSecret = null; // required credentials secret string    
+ 
 $sesClientSender = new SesClientSender($credentialsKey, $credentialsSecret)
 
 false === empty($profile) && $sesClientSender->setProfile($profile); // is optional if you need to change default ses profile in credentials file ( default )
